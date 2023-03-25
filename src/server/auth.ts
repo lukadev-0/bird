@@ -43,6 +43,7 @@ export const authOptions: NextAuthOptions = {
       if (session.user) {
         session.user.id = user.id;
         session.user.handle = user.handle;
+        session.user.banned = user.banned;
       }
       return session;
     },
