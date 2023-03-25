@@ -65,6 +65,7 @@ model User {
     sessions      Session[]
     posts         Post[]
     handle        String
+    banned        Boolean?
 
     @@unique([handle])
 }

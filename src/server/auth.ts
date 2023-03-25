@@ -21,12 +21,14 @@ declare module "next-auth" {
       id: string;
       image: string;
       handle: string;
+      banned?: boolean;
     } & DefaultSession["user"];
   }
 
   interface User {
     image: string;
     handle: string;
+    banned?: boolean;
   }
 }
 

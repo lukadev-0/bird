@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { prisma } from "~/server/db";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
@@ -39,6 +40,13 @@ export const postsRouter = createTRPCRouter({
       })
     )
     .mutation(({ ctx, input }) => {
+      if (ctx.session.user.banned) {
+        throw new TRPCError({
+          message: "Banned",
+          code: "FORBIDDEN",
+        });
+      }
+
       return prisma.post.create({
         data: {
           content: input.content,
