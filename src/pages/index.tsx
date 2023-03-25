@@ -125,7 +125,7 @@ const Home: NextPage = () => {
               {status === "success" &&
                 posts.map((post) => (
                   <article key={post.id} className="flex">
-                    <div className="mr-2">
+                    <div className="mr-2 flex-shrink-0">
                       <Image
                         src={post.author.image}
                         alt=""
@@ -144,7 +144,7 @@ const Home: NextPage = () => {
                           @{post.author.handle}
                         </span>
                       </Link>
-                      <p>{post.content}</p>
+                      <p className="break-words">{post.content}</p>
                     </div>
                   </article>
                 ))}
