@@ -44,7 +44,7 @@ const Layout: React.FC<Props> = ({ children }) => {
 
   return (
     <div className="mx-auto flex min-h-screen max-w-screen-lg justify-center px-4">
-      <aside className="flex w-56 flex-col py-4">
+      <aside className="sticky top-0 flex h-screen w-56 flex-col py-4">
         <div className="mb-6">
           <strong className="text-lg font-semibold">Bird</strong>
         </div>
