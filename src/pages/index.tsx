@@ -93,7 +93,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="pt-16">
+      <div className="pt-16 pb-8">
         {sessionStatus === "loading" && (
           <div className="flex justify-center pt-16">
             <Spinner className="h-8 w-8" />
