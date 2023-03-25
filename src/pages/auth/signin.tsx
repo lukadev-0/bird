@@ -1,6 +1,6 @@
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import type { NextPage } from "next";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Spinner from "~/components/Spinner";
@@ -14,8 +14,10 @@ const ERROR_MESSAGES: Record<string, string> = {
 
 const SignIn: NextPage = () => {
   const router = useRouter();
+  const { status } = useSession();
   const redirectToSignIn =
     router.isReady &&
+    status === "unauthenticated" &&
     (!router.query.error || router.query.error === "SessionRequired");
 
   useEffect(() => {
@@ -24,7 +26,13 @@ const SignIn: NextPage = () => {
     }
   }, [redirectToSignIn]);
 
-  if (router.isReady && !redirectToSignIn) {
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/").catch((err) => console.error(err));
+    }
+  }, [router, status]);
+
+  if (router.isReady && status === "unauthenticated" && !redirectToSignIn) {
     const error =
       typeof router.query.error === "string" ? router.query.error : undefined;
 
