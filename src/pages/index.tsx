@@ -134,7 +134,7 @@ const Home: NextPage = () => {
                         className="rounded-full bg-gray-800"
                       />
                     </div>
-                    <div className="mt-0.5 w-full">
+                    <div className="mt-0.5 w-full min-w-0 max-w-fit">
                       <Link
                         href={`/@${post.author.handle}`}
                         className="space-x-2"
