@@ -37,7 +37,7 @@ const ProfilePage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (
   return (
     <>
       <Head>
-        <title>@{user.handle} - Bird</title>
+        <title>{`@${user.handle} - Bird`}</title>
         <meta name="description" content="Totally not a Twitter clone" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
