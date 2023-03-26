@@ -1,6 +1,5 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { prisma } from "~/server/db";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const postsRouter = createTRPCRouter({
@@ -12,8 +11,8 @@ export const postsRouter = createTRPCRouter({
         })
         .optional()
     )
-    .query(({ input }) => {
-      return prisma.post.findMany({
+    .query(({ ctx, input }) => {
+      return ctx.prisma.post.findMany({
         orderBy: { createdAt: "desc" },
         take: input?.limit ?? 20,
         select: {
@@ -47,7 +46,7 @@ export const postsRouter = createTRPCRouter({
         });
       }
 
-      return prisma.post.create({
+      return ctx.prisma.post.create({
         data: {
           content: input.content,
           authorId: ctx.session.user.id,
