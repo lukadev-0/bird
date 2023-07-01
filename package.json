@@ -6,22 +6,28 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "db:push": "drizzle-kit push:mysql"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.21.13",
     "@clerk/themes": "^1.7.5",
     "@heroicons/react": "^2.0.18",
+    "@planetscale/database": "^1.8.0",
     "clsx": "^1.2.1",
+    "drizzle-orm": "^0.27.0",
     "framer-motion": "^10.12.18",
     "next": "^13.4.7",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-textarea-autosize": "^8.5.0"
   },
   "devDependencies": {
     "@types/node": "^20.3.2",
     "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
     "autoprefixer": "^10.4.14",
+    "drizzle-kit": "^0.19.2",
     "eslint-config-next": "^13.4.7",
     "postcss": "^8.4.24",
     "prettier": "^2.8.8",
