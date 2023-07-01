@@ -5,7 +5,7 @@ import { NavUser } from "./NavUser";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mx-auto min-h-screen flex max-w-max">
+    <div className="mx-auto min-h-screen flex justify-center">
       <aside className="w-64 py-3 px-4 flex flex-col sticky top-0 h-screen flex-shrink-0">
         <Link className="text-lg font-semibold" href="/">
           Bird
@@ -25,7 +25,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <NavUser />
       </aside>
 
-      <main className="border-x border-gray-800 max-w-2xl">{children}</main>
+      <main className="border-x border-gray-800 max-w-2xl w-full">
+        {children}
+      </main>
 
       <aside className="w-64 pt-3 px-4 text-gray-400 sticky top-0 h-screen flex-shrink-0">
         TODO: put content here
