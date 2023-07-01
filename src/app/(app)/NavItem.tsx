@@ -22,8 +22,9 @@ export function NavItem({
     <Link
       href={href}
       className={clsx(
-        "flex rounded hover:bg-gray-500/20 px-3 py-2 -ml-3 text-gray-400 relative items-center transition",
-        { "text-gray-200": isActive }
+        "flex rounded hover:bg-gray-500/20 px-3 py-2 -ml-3 relative items-center transition",
+        { "text-gray-200": isActive },
+        { "text-gray-400": !isActive }
       )}
     >
       {isActive && (
