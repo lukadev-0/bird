@@ -25,6 +25,8 @@ export type PostAuthorResource = {
 export async function fetchLatestPosts(): Promise<PostResource[]> {
   const data = await db.query.posts.findMany({
     orderBy: desc(posts.createdAt),
+    // TODO: add pagination
+    limit: 20,
   });
 
   const users = await clerkClient.users.getUserList({
