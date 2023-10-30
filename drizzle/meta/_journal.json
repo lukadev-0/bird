@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1698679991269,
+      "tag": "0000_pale_typhoid_mary",
+      "breakpoints": true
+    }
+  ]
+}
