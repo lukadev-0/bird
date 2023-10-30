@@ -17,15 +17,17 @@ interface PostProps
   extends Omit<React.ComponentPropsWithRef<typeof Link>, "href"> {
   href?: string;
   post: PostResource;
-  size?: "default" | "lg";
 }
 
 const Post = React.forwardRef<HTMLAnchorElement, PostProps>(
-  ({ post, size = "default", className, ...props }, ref) => {
+  ({ post, className, ...props }, ref) => {
     return (
       <Link
         ref={ref}
-        className={cn("block px-6 py-4 transition hover:bg-muted", className)}
+        className={cn(
+          "block px-6 py-4 transition hover:bg-muted/50",
+          className,
+        )}
         href={`/@${post.author.username}/${post.id}`}
         {...props}
       >
@@ -41,7 +43,7 @@ const Post = React.forwardRef<HTMLAnchorElement, PostProps>(
               <span className="font-semibold">
                 {post.author.name}
                 {post.author.verified && (
-                  <BadgeCheck className="mx-1 inline h-5 w-5 text-emerald-400" />
+                  <BadgeCheck className="ml-1 inline h-5 w-5 text-emerald-400" />
                 )}
               </span>{" "}
               <span className="text-muted-foreground">
@@ -77,6 +79,57 @@ const Post = React.forwardRef<HTMLAnchorElement, PostProps>(
 
 Post.displayName = "Post";
 
+interface LargePostProps extends React.HTMLAttributes<HTMLDivElement> {
+  post: PostResource;
+}
+
+const LargePost = React.forwardRef<HTMLDivElement, LargePostProps>(
+  ({ post, className, ...props }, ref) => {
+    return (
+      <div ref={ref} className={cn("px-6 py-2", className)} {...props}>
+        <div className="mb-4 flex space-x-2">
+          <Avatar className="h-12 w-12">
+            <AvatarImage src={post.author.imageUrl} />
+            <AvatarFallback asChild>
+              <Skeleton />
+            </AvatarFallback>
+          </Avatar>
+          <div>
+            <div className="flex flex-col">
+              <span className="font-semibold">
+                {post.author.name}
+                {post.author.verified && (
+                  <BadgeCheck className="ml-1 inline h-5 w-5 text-emerald-400" />
+                )}
+              </span>{" "}
+              <span className="-mt-1 text-muted-foreground">
+                @{post.author.username}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="-mt-0.5 mb-4 whitespace-pre-wrap break-all text-xl">
+          {post.content}
+        </div>
+
+        <div className="text-sm text-muted-foreground">
+          {post.createdAt.toLocaleString("en-us", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour12: false,
+            hour: "numeric",
+            minute: "numeric",
+          })}
+        </div>
+      </div>
+    );
+  },
+);
+
+LargePost.displayName = "LargePost";
+
 const PostSkeleton = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -105,4 +158,4 @@ const PostSkeleton = React.forwardRef<
 
 PostSkeleton.displayName = "PostSkeleton";
 
-export { Post, PostSkeleton };
+export { Post, LargePost, PostSkeleton };
