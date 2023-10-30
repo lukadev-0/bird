@@ -1,4 +1,16 @@
-ALTER TABLE posts ADD `parent_id` text REFERENCES posts(id);--> statement-breakpoint
+PRAGMA foreign_keys=OFF;
+
+CREATE TABLE `new_posts` (
+	`id` text PRIMARY KEY NOT NULL,
+	`created_at` integer DEFAULT (strftime('%s', 'now')) NOT NULL,
+	`author_id` text NOT NULL,
+	`content` text NOT NULL,
+	FOREIGN KEY (parent_id) REFERENCES posts(id)
+);
+INSERT INTO new_posts SELECT * FROM posts;
+DROP TABLE posts;
+ALTER TABLE new_posts RENAME TO posts;
+
 CREATE INDEX `parent_id_idx` ON `posts` (`parent_id`);--> statement-breakpoint
 CREATE INDEX `created_at_idx` ON `posts` (`created_at`);--> statement-breakpoint
 /*
