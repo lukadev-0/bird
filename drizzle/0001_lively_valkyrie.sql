@@ -7,7 +7,7 @@ CREATE TABLE `new_posts` (
 	`content` text NOT NULL,
 	FOREIGN KEY (parent_id) REFERENCES posts(id)
 );
-INSERT INTO new_posts SELECT * FROM posts;
+INSERT INTO new_posts SELECT id, created_at, author_id, content FROM posts;
 DROP TABLE posts;
 ALTER TABLE new_posts RENAME TO posts;
 
