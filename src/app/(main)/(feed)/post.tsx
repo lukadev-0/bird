@@ -11,7 +11,7 @@ import {
 } from "~/components/ui/tooltip";
 import { formatDateFromNow } from "~/lib/format-date-from-now";
 import { cn } from "~/lib/utils";
-import { type PostResource } from "~/server/actions/posts";
+import { type PostResource } from "~/server/posts/types";
 
 interface PostProps
   extends Omit<React.ComponentPropsWithRef<typeof Link>, "href"> {

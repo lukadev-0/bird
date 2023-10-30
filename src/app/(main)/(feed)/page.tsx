@@ -1,20 +1,31 @@
 "use client";
 
 import { TitleBar } from "../title-bar";
-import { createPost, fetchLatestPosts } from "~/server/actions/posts";
+import { createPost } from "~/server/posts/actions";
 import useSWR from "swr";
 import { useUser } from "@clerk/nextjs";
 import { CreatePost } from "./create-post";
 import { AlertCircle } from "lucide-react";
 import { Post, PostSkeleton } from "./post";
 import { cn } from "~/lib/utils";
+import { PostResource } from "~/server/posts/types";
 
 export default function Home() {
-  const { data, error, isLoading, mutate } = useSWR(
-    ["fetchLatestPosts"],
-    () => {
-      return fetchLatestPosts();
-    },
+  const { data, error, isLoading, mutate } = useSWR("/api/posts", (url) =>
+    fetch(url).then(async (res) =>
+      ((await res.json()) as PostResource[]).map<PostResource>((post) => ({
+        id: post.id,
+        author: {
+          id: post.author.id,
+          name: post.author.name,
+          username: post.author.username,
+          verified: post.author.verified,
+          imageUrl: post.author.imageUrl,
+        },
+        content: post.content,
+        createdAt: new Date(post.createdAt),
+      })),
+    ),
   );
   const { user, isLoaded: userIsLoaded } = useUser();
 
