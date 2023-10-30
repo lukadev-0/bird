@@ -59,7 +59,9 @@ const Post = React.forwardRef<HTMLAnchorElement, PostProps>(
                 </TooltipProvider>
               </span>
             </div>
-            <div className="-mt-0.5 whitespace-pre-wrap">{post.content}</div>
+            <div className="-mt-0.5 whitespace-pre-wrap break-all">
+              {post.content}
+            </div>
           </div>
         </div>
       </Link>
