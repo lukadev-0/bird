@@ -12,10 +12,7 @@ export default function Home() {
   const { data, error, isLoading, mutate } = useSWR(
     ["fetchLatestPosts"],
     () => {
-      return fetchLatestPosts({
-        page: 0,
-        limit: 20,
-      });
+      return fetchLatestPosts();
     },
   );
   const { user, isLoaded: userIsLoaded } = useUser();
