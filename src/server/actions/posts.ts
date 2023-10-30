@@ -19,6 +19,7 @@ export type PostAuthorResource = {
   username: string;
   name: string;
   imageUrl?: string;
+  verified: boolean;
 };
 
 export async function fetchLatestPosts(): Promise<PostResource[]> {
@@ -40,6 +41,7 @@ export async function fetchLatestPosts(): Promise<PostResource[]> {
         username: author?.username ?? "Deleted User",
         name: author?.firstName ?? author?.username ?? "Deleted User",
         imageUrl: author?.imageUrl,
+        verified: (author?.publicMetadata.verified as boolean) ?? false,
       },
       createdAt: post.createdAt,
       content: post.content,
@@ -70,6 +72,7 @@ export async function createPost(options: unknown): Promise<PostResource> {
       username: user.username ?? "",
       name: user.firstName ?? user.username ?? "",
       imageUrl: user.imageUrl,
+      verified: (user?.publicMetadata.verified as boolean) ?? false,
     },
     createdAt: post.createdAt,
     content: post.content,

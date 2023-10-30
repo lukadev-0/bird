@@ -1,3 +1,4 @@
+import { BadgeCheck } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
@@ -37,7 +38,12 @@ const Post = React.forwardRef<HTMLAnchorElement, PostProps>(
           </Avatar>
           <div>
             <div className="-mt-1">
-              <span className="font-semibold">{post.author.name}</span>{" "}
+              <span className="font-semibold">
+                {post.author.name}
+                {post.author.verified && (
+                  <BadgeCheck className="mx-1 inline h-5 w-5 text-emerald-400" />
+                )}
+              </span>{" "}
               <span className="text-muted-foreground">
                 @{post.author.username}
                 {" · "}
