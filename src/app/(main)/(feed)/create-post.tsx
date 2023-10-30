@@ -22,6 +22,8 @@ const CreatePost = React.forwardRef<HTMLFormElement, CreatePostProps>(
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       onSubmit({ content });
+
+      setContent("");
     };
 
     return (
