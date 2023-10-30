@@ -68,4 +68,33 @@ const Post = React.forwardRef<HTMLAnchorElement, PostProps>(
 );
 
 Post.displayName = "Post";
-export { Post };
+
+const PostSkeleton = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => {
+  return (
+    <div ref={ref} className={cn("px-6 py-4")} {...props}>
+      <div className="flex space-x-2">
+        <div>
+          <Skeleton className="h-10 w-10 rounded-full" />
+        </div>
+        <div className="w-full">
+          <div className="flex space-x-1">
+            <Skeleton className="h-4 w-[100px]" />
+            <Skeleton className="h-4 w-[150px]" />
+          </div>
+          <div className="mt-2 w-full space-y-1 whitespace-pre-wrap">
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-full" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+});
+
+PostSkeleton.displayName = "PostSkeleton";
+
+export { Post, PostSkeleton };

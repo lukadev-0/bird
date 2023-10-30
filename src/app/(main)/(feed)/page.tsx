@@ -6,7 +6,8 @@ import useSWR from "swr";
 import { useUser } from "@clerk/nextjs";
 import { CreatePost } from "./create-post";
 import { AlertCircle } from "lucide-react";
-import { Post } from "./post";
+import { Post, PostSkeleton } from "./post";
+import { cn } from "~/lib/utils";
 
 export default function Home() {
   const { data, error, isLoading, mutate } = useSWR(
@@ -18,8 +19,20 @@ export default function Home() {
   const { user, isLoaded: userIsLoaded } = useUser();
 
   return (
-    <>
+    <div
+      className={cn({ "h-screen overflow-hidden": isLoading || !userIsLoaded })}
+    >
       <TitleBar>Home</TitleBar>
+
+      {(isLoading || !userIsLoaded) && (
+        <div className="h-screen divide-y divide-border overflow-hidden border-b border-border">
+          {Array(20)
+            .fill(undefined)
+            .map((_, i) => (
+              <PostSkeleton key={i} />
+            ))}
+        </div>
+      )}
 
       {!isLoading && userIsLoaded && (
         <>
@@ -51,6 +64,6 @@ export default function Home() {
           )}
         </>
       )}
-    </>
+    </div>
   );
 }
