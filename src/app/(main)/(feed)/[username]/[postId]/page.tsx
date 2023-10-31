@@ -65,7 +65,7 @@ export default async function PostPage({
               <span className="font-semibold">
                 {parentName}
                 {(parentAuthor?.publicMetadata.verified ?? false) && (
-                  <BadgeCheck className="ml-1 inline h-5 w-5 text-emerald-500" />
+                  <BadgeCheck className="ml-1 inline h-5 w-5 text-emerald-400" />
                 )}
               </span>{" "}
               <span className="text-muted-foreground">@{parentUsername}</span>
