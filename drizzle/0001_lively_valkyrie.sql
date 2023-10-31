@@ -19,7 +19,7 @@ CREATE INDEX `created_at_idx` ON `posts` (`created_at`);--> statement-breakpoint
 
 PRAGMA foreign_key_check;--> statement-breakpoint
 
-PRAGMA foreign_keys=ON;--> statement-breakpoint
+PRAGMA foreign_keys=ON;
 /*
  SQLite does not support "Creating foreign key on existing column" out of the box, we do not generate automatic migration for that, so it has to be done manually
  Please refer to: https://www.techonthenet.com/sqlite/tables/alter_table.php
