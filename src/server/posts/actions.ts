@@ -17,6 +17,7 @@ export async function fetchLatestPosts(): Promise<PostResource[]> {
 
   const users = await clerkClient.users.getUserList({
     userId: data.map((post) => post.authorId),
+    limit: 20,
   });
 
   return data.map((post) => {
@@ -80,10 +81,12 @@ export async function getPostReplies(
   const replies = await db.query.posts.findMany({
     where: eq(posts.parentId, postId),
     orderBy: desc(posts.createdAt),
+    limit: 20,
   });
 
   const users = await clerkClient.users.getUserList({
     userId: replies.map((post) => post.authorId),
+    limit: 20,
   });
 
   return replies.map((post) => {
