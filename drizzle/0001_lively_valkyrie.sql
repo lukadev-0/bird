@@ -6,6 +6,7 @@ CREATE TABLE `new_posts` (
 	`created_at` integer DEFAULT (strftime('%s', 'now')) NOT NULL,
 	`author_id` text NOT NULL,
 	`content` text NOT NULL,
+	`parent_id` text,
 	FOREIGN KEY(parent_id) REFERENCES posts(id)
 );--> statement-breakpoint
 
