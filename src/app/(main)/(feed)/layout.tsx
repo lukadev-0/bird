@@ -5,7 +5,7 @@ export default function FeedLayout({
 }) {
   return (
     <>
-      <div className="flex flex-grow flex-col">{children}</div>
+      <div className="flex min-w-0 flex-grow flex-col">{children}</div>
       <div className="sticky top-0 z-20 flex h-screen w-64 flex-shrink-0 flex-col border-l border-l-border p-4">
         <Technologies />
       </div>

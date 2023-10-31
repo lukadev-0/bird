@@ -9,6 +9,7 @@ import { PostPageWrapper } from "./wrapper";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Skeleton } from "~/components/ui/skeleton";
+import { BadgeCheck } from "lucide-react";
 
 export const revalidate = 30;
 
@@ -26,6 +27,7 @@ export default async function PostPage({
         columns: {
           id: true,
           authorId: true,
+          content: true,
         },
       },
     },
@@ -49,18 +51,28 @@ export default async function PostPage({
       {post.parent && (
         <Link
           href={`/@${parentUsername}/${post.parent?.id}`}
-          className="relative flex items-center py-2 pl-16 transition hover:bg-muted/50"
+          className="relative flex py-2 pl-16 transition hover:bg-muted/50"
         >
-          <div className="absolute left-11 top-6 -mt-0.5 ml-0.5 h-9 w-6 rounded-tl-lg border-l-2 border-t-2 border-border" />
-          <Avatar className="mr-2 h-8 w-8">
+          <div className="absolute left-11 top-[1.7rem] -mt-0.5 ml-0.5 h-10 w-6 rounded-tl-lg border-l-2 border-t-2 border-border" />
+          <Avatar className="mr-2 h-9 w-9">
             <AvatarImage src={parentAuthor?.imageUrl} />
             <AvatarFallback asChild>
               <Skeleton />
             </AvatarFallback>
           </Avatar>
-          <div>
-            <span className="font-semibold">{parentName}</span>{" "}
-            <span className="text-muted-foreground">@{parentUsername}</span>
+          <div className="min-w-0">
+            <div className="-mt-1">
+              <span className="font-semibold">
+                {parentName}
+                {(parentAuthor?.publicMetadata.verified ?? false) && (
+                  <BadgeCheck className="ml-1 inline h-5 w-5 text-emerald-500" />
+                )}
+              </span>{" "}
+              <span className="text-muted-foreground">@{parentUsername}</span>
+            </div>
+            <div className="-mt-0.5 overflow-hidden text-ellipsis whitespace-nowrap text-sm">
+              {post.parent.content}
+            </div>
           </div>
         </Link>
       )}

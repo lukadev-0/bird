@@ -39,7 +39,7 @@ export async function fetchLatestPosts(): Promise<PostResource[]> {
 
 const CreatePostOptions = z.object({
   content: z.string().min(1).max(MAX_POST_LENGTH),
-  parentId: z.string(),
+  parentId: z.string().optional(),
 });
 
 export async function createPost(options: unknown): Promise<PostResource> {
@@ -79,6 +79,7 @@ export async function getPostReplies(
 
   const replies = await db.query.posts.findMany({
     where: eq(posts.parentId, postId),
+    orderBy: desc(posts.createdAt),
   });
 
   const users = await clerkClient.users.getUserList({
