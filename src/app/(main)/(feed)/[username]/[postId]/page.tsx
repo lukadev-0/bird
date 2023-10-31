@@ -1,4 +1,4 @@
-import { clerkClient } from "@clerk/nextjs/server";
+import { User, clerkClient } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import { notFound, redirect } from "next/navigation";
 import { TitleBar } from "~/app/(main)/title-bar";
@@ -10,18 +10,15 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Skeleton } from "~/components/ui/skeleton";
 import { BadgeCheck } from "lucide-react";
+import { Metadata } from "next";
 
 export const revalidate = 30;
 
-export default async function PostPage({
-  params,
-}: {
-  params: { username: string; postId: string };
-}) {
-  const username = decodeURIComponent(params.username).slice(1);
+type Props = { params: { username: string; postId: string } };
 
+async function fetchPost(postId: string) {
   const post = await db.query.posts.findFirst({
-    where: eq(posts.id, params.postId),
+    where: eq(posts.id, postId),
     with: {
       parent: {
         columns: {
@@ -32,10 +29,34 @@ export default async function PostPage({
       },
     },
   });
-
-  if (!post) notFound();
+  if (!post) return { post: null, user: null };
 
   const user = await clerkClient.users.getUser(post.authorId);
+  return { post, user: (user as User | null) ?? null };
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { post, user } = await fetchPost(params.postId);
+  if (!post) notFound();
+
+  return {
+    title: `@${user?.username ?? "Deleted User"}: ${
+      post.content.length > 100 ? post.content.slice(0, 99) + "…" : post.content
+    }`,
+    description: post.content,
+    openGraph: {
+      title: `@${user?.username ?? "Deleted User"} on Bird`,
+      description: post.content,
+      url: `/@${user?.username ?? "Deleted User"}/${post.id}`,
+    },
+  };
+}
+
+export default async function PostPage({ params }: Props) {
+  const username = decodeURIComponent(params.username).slice(1);
+
+  const { post, user } = await fetchPost(params.postId);
+  if (!post) notFound();
   if (user && user.username !== username)
     redirect(`/@${user.username}/${post.id}`);
 
@@ -84,11 +105,11 @@ export default async function PostPage({
           createdAt: post.createdAt,
           content: post.content,
           author: {
-            id: user.id,
-            username: user.username ?? "Deleted User",
-            name: user.firstName ?? user.username ?? "Deleted User",
-            imageUrl: user.imageUrl,
-            verified: (user.publicMetadata.verified as boolean) ?? false,
+            id: user?.id ?? "",
+            username: user?.username ?? "Deleted User",
+            name: user?.firstName ?? user?.username ?? "Deleted User",
+            imageUrl: user?.imageUrl,
+            verified: (user?.publicMetadata.verified as boolean) ?? false,
           },
         }}
       />

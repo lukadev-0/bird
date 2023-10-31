@@ -7,8 +7,21 @@ import { ThemeProvider } from "~/components/theme-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Bird",
+  title: {
+    template: "%s | Bird",
+    default: "Bird",
+  },
   description: "very cool social app",
+  metadataBase: new URL("https://bird.lukadev.me"),
+  openGraph: {
+    title: "Bird",
+    description: "very cool social app",
+    url: "https://bird.lukadev.me",
+    siteName: "Bird",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({
