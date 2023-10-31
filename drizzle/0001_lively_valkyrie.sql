@@ -1,6 +1,5 @@
 PRAGMA foreign_keys=OFF;--> statement-breakpoint
 
-BEGIN;--> statement-breakpoint
 
 CREATE TABLE `new_posts` (
 	`id` text PRIMARY KEY NOT NULL,
@@ -19,7 +18,6 @@ CREATE INDEX `parent_id_idx` ON `posts` (`parent_id`);--> statement-breakpoint
 CREATE INDEX `created_at_idx` ON `posts` (`created_at`);--> statement-breakpoint
 
 PRAGMA foreign_key_check;--> statement-breakpoint
-COMMIT;--> statement-breakpoint
 
 PRAGMA foreign_keys=ON;--> statement-breakpoint
 /*
