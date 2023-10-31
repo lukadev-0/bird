@@ -12,7 +12,6 @@ CREATE TABLE `new_posts` (
 
 INSERT INTO `new_posts` (id, created_at, author_id, content) SELECT id, created_at, author_id, content FROM `posts`;--> statement-breakpoint
 DROP TABLE `posts`;--> statement-breakpoint
-DROP TABLE `posts`;--> statement-breakpoint
 ALTER TABLE `new_posts` RENAME TO `posts`;--> statement-breakpoint
 
 CREATE INDEX `parent_id_idx` ON `posts` (`parent_id`);--> statement-breakpoint
