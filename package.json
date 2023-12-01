@@ -44,7 +44,7 @@
   "devDependencies": {
     "@clerk/types": "^3.57.0",
     "@types/node": "^20",
-    "@types/react": "^18",
+    "@types/react": "18.2.33",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
     "drizzle-kit": "^0.20.6",
