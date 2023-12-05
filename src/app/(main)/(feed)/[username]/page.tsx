@@ -1,4 +1,5 @@
 import { clerkClient } from "@clerk/nextjs";
+import { BadgeCheck } from "lucide-react";
 import { notFound } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Skeleton } from "~/components/ui/skeleton";
@@ -33,6 +34,10 @@ export default async function ProfilePage({
         <div className="mt-14 px-6">
           <h1 className="text-xl font-semibold">
             {user.firstName ?? user.username}
+
+            {(user.publicMetadata.verified as boolean) && (
+              <BadgeCheck className="-mt-1 ml-2 inline h-6 w-6 text-emerald-400" />
+            )}
           </h1>
           <div className="-mt-1 text-muted-foreground">@{user.username}</div>
 
